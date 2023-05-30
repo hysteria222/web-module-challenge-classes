@@ -91,9 +91,16 @@ class Car {
       return gallons
   }
   drive(distance){
-    distance = this.odometer + this.milesPerGallon;
-    this.tank = this.tank - distance;
-    this.odometer = this.milesPerGallon/distance
+    const gasUsed = distance/this.milesPerGallon;
+    if(this.tank >= gasUsed){
+       this.tank = this.tank - gasUsed;
+    this.odometer = this.odometer + distance;
+    }
+    else{
+      const maxDistance = this.tank * this.milesPerGallon;
+      this.odometer = this.odometer + maxDistance;
+      this.tank = 0;
+    }
     if(this.tank === 0){
       return `I ran out of fuel at ${this.odometer} miles.`
          }
@@ -104,8 +111,8 @@ class Car {
 }
 const crap = new Car('Ford Fiesta', 5)
 console.log(crap.fill(100))
-console.log(crap.drive(90))
-
+crap.fill(10)
+console.log(crap.drive(509))
 
 /*
   TASK 3
